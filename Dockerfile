@@ -8,7 +8,7 @@ RUN apt update && \
 WORKDIR /
 COPY ./fs /
 
-VOLUME [ "/var/run/libvirt/libvirt-sock-ro", "/data" ]
+VOLUME [ "/var/run/libvirt", "/data" ]
 
 ENTRYPOINT [ "dumb-init", "--" ]
 CMD [ "python3", "-m", "srv", "--", "/data", "--daemon", "60", "--download" ]
