@@ -31,4 +31,4 @@ jobs:
           repository: ${{ secrets.DOCKER_USERNAME }}/libvirt-chores
           tags: latest
           path: .
-          Dockerfile: .Dockerfile
+          Dockerfile: Dockerfile
