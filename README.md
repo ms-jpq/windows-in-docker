@@ -2,7 +2,7 @@
 
 Periodically dump libvirt XML into `/data`
 
-- `domain` (VMs),
+- `domain` (VMs)
 
 - `network`
 
