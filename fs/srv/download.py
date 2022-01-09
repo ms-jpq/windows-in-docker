@@ -40,10 +40,11 @@ def _fetch(uri: str) -> Iterator[bytes]:
 
 
 def download(root: Path, src: str) -> None:
-    root.chmod(RWXR_XR_X)
+    base = root / "downloads"
+    base.mkdir(parents=True, exist_ok=True, mode=RWXR_XR_X)
 
     path = PurePosixPath(unquote(urlsplit(src).path))
-    dest = root / path.name
+    dest = base / path.name
 
     size, mtime = _meta(src)
     with suppress(FileNotFoundError):
@@ -52,7 +53,6 @@ def download(root: Path, src: str) -> None:
             return
 
     stream = _fetch(src)
-    dest.parent.mkdir(parents=True, exist_ok=True)
     with NamedTemporaryFile(dir=dest.parent, prefix=dest.name, delete=False) as fd:
         for chunk in stream:
             fd.write(chunk)
@@ -60,4 +60,5 @@ def download(root: Path, src: str) -> None:
     Path(fd.name).replace(dest)
     dest.chmod(RW_R__R__)
     utime(dest, (mtime, mtime))
+
     log.info("%s", f"downloaded -- {src}")

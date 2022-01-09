@@ -51,7 +51,7 @@ def main() -> None:
         if args.download:
             yield lambda: _cycle(
                 args.daemon,
-                fn=lambda: download(root / "downloads", src=args.driver),
+                fn=lambda: download(root, src=args.driver),
             )
 
     _exec(*tasks())
