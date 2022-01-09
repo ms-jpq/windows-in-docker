@@ -6,6 +6,7 @@ from typing import Callable, Iterator
 
 from .backup import backup
 from .download import download
+from .log import log
 
 # https://github.com/virtio-win/virtio-win-pkg-scripts
 _DRIVER_URI = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso"
@@ -13,7 +14,12 @@ _DRIVER_URI = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/
 
 def _cycle(period: int, fn: Callable[[], None]) -> None:
     while True:
-        fn()
+        try:
+            fn()
+        except Exception as e:
+            log.exception("%s", e)
+
+        sleep(period)
         if period := max(0, period):
             sleep(period)
         else:
