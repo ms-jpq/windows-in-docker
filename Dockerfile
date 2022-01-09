@@ -10,5 +10,5 @@ COPY ./fs /
 
 VOLUME [ "/var/run/libvirt/libvirt-sock-ro", "/data" ]
 
-ENTRYPOINT [ "dumb-init" ]
+ENTRYPOINT [ "dumb-init", "--" ]
 CMD [ "python3", "-m", "srv", "--", "/data", "--daemon", "60", "--download" ]
