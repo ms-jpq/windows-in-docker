@@ -1,4 +1,4 @@
-from contextlib import closing, contextmanager
+from contextlib import closing
 from datetime import datetime
 from itertools import repeat
 from pathlib import Path
@@ -7,15 +7,6 @@ from typing import Any, Iterable, Iterator, Tuple
 from libvirt import openReadOnly
 
 from .log import log
-
-
-@contextmanager
-def _conn() -> Iterator[Any]:
-    if not (conn := openReadOnly()):
-        yield None
-    else:
-        with closing(conn):
-            yield conn
 
 
 def _ls_domains(conn: Any) -> Iterator[Tuple[str, str]]:
@@ -60,15 +51,12 @@ def _backup(
 
 def backup(root: Path) -> None:
     now = datetime.utcnow().replace(microsecond=0)
-    with _conn() as conn:
-        if not conn:
-            raise RuntimeError("failed to connect to libvirt")
-        else:
-            state = (
-                *zip(repeat(root / "domains"), _ls_domains(conn)),
-                *zip(repeat(root / "storage"), _ls_storage(conn)),
-                *zip(repeat(root / "networks"), _ls_networks(conn)),
-            )
+    with closing(openReadOnly()) as conn:
+        state = (
+            *zip(repeat(root / "domains"), _ls_domains(conn)),
+            *zip(repeat(root / "storage"), _ls_storage(conn)),
+            *zip(repeat(root / "networks"), _ls_networks(conn)),
+        )
 
     for name in _backup(now, state=state):
         log.info("%s", f"backed up -- {name}")
