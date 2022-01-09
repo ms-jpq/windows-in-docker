@@ -12,4 +12,4 @@ COPY ./fs /
 VOLUME [ "/var/run/libvirt", "/data" ]
 
 ENTRYPOINT [ "dumb-init", "--" ]
-CMD [ "python3", "-m", "srv", "/data", "--daemon", "60", "--download" ]
+CMD [ "python3", "-m", "srv", "/data", "--backup-daemon", "60", "--download", "--download-daemon", "86400" ]

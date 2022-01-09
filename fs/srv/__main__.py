@@ -31,10 +31,15 @@ def _exec(*stream: Callable[[], None]) -> None:
 
 def _parse_args() -> Namespace:
     parser = ArgumentParser()
+
     parser.add_argument("destination")
-    parser.add_argument("--daemon", type=int, default=0)
+
+    parser.add_argument("--backup-daemon", type=int, default=0)
+    parser.add_argument("--download-daemon", type=int, default=0)
+
     parser.add_argument("--download", action="store_true")
     parser.add_argument("--driver", default=_DRIVER_URI)
+
     return parser.parse_args()
 
 
@@ -44,13 +49,13 @@ def main() -> None:
 
     def tasks() -> Iterator[Callable[[], None]]:
         yield lambda: _cycle(
-            args.daemon,
+            args.backup_daemon,
             fn=lambda: backup(root),
         )
 
         if args.download:
             yield lambda: _cycle(
-                args.daemon,
+                args.download_daemon,
                 fn=lambda: download(root, src=args.driver),
             )
 
