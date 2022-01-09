@@ -1,6 +1,7 @@
 from logging import INFO, Formatter, Logger, StreamHandler, getLogger
 
 _FMT = """
+---
 %(levelname)s\t%(asctime)s
 %(message)s
 """
