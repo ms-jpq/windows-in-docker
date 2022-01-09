@@ -18,7 +18,6 @@ def _cycle(period: int, fn: Callable[[], None]) -> None:
         except Exception as e:
             log.exception("%s", e)
 
-        sleep(period)
         if period := max(0, period):
             sleep(period)
         else:
