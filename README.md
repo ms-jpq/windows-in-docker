@@ -1,4 +1,4 @@
-# Libvirt Chores
+# [Libvirt Chores](https://ms-jpq.github.io/libvirt-chores)
 
 Periodically dump libvirt XML into `/data`
 
