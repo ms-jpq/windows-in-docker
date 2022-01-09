@@ -53,6 +53,7 @@ def _backup(
 
 def backup(root: Path) -> None:
     now = datetime.utcnow().replace(microsecond=0)
+
     with closing(openReadOnly()) as conn:
         state = (
             *zip(repeat(root / "domains"), _ls_domains(conn)),
