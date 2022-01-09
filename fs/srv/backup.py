@@ -7,6 +7,7 @@ from typing import Any, Iterable, Iterator, Tuple
 from libvirt import openReadOnly
 
 from .log import log
+from .pathlib import chmod
 
 
 def _ls_domains(conn: Any) -> Iterator[Tuple[str, str]]:
@@ -34,6 +35,7 @@ def _backup(
         path = base / stub
 
         base.mkdir(parents=True, exist_ok=True)
+        chmod(base)
 
         if prev := sorted(
             base.iterdir(),
@@ -43,9 +45,11 @@ def _backup(
             most_recent, *_ = prev
             if xml != most_recent.read_text():
                 path.write_text(xml)
+                chmod(path)
                 yield name
         else:
             path.write_text(xml)
+            chmod(path)
             yield name
 
 
