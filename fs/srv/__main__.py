@@ -45,7 +45,7 @@ def main() -> None:
 
     def tasks() -> Iterator[Callable[[], None]]:
         yield lambda: _cycle(
-            args.deamon,
+            args.daemon,
             fn=lambda: backup(root),
         )
 
