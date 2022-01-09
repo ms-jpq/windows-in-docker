@@ -22,3 +22,13 @@ jobs:
 
       - name: Lint
         run: mypy -- .
+
+      - name: Build
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: ${{ secrets.DOCKER_USERNAME }}/libvirt-chores
+          tags: latest
+          path: .
+          Dockerfile: .Dockerfile
