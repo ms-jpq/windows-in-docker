@@ -14,6 +14,8 @@ Periodically dump libvirt XML into `/data/backup`
 
 ### Download Windows Drivers
 
+Periodically dump latest virtio-win.iso into `/data/downloads`
+
 [From latest stable release](https://github.com/virtio-win/virtio-win-pkg-scripts)
 
 ## Usage
