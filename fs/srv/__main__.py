@@ -52,7 +52,7 @@ def main() -> None:
 
         if args.download:
             yield lambda: _cycle(
-                args.aemon,
+                args.daemon,
                 fn=lambda: download(root / "downloads", src=args.driver),
             )
 
