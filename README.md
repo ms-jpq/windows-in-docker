@@ -1,6 +1,14 @@
 # Libvirt Chores
 
-Periodically dump libvirt `domain` (VMs), `network` and `storage` XML into `/data`
+Periodically dump libvirt XML into `/data`
+
+- `domain` (VMs),
+
+- `network`
+
+- `storage`
+
+## Usage
 
 ```yaml
 ---
