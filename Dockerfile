@@ -3,6 +3,7 @@ FROM ubuntu:latest
 RUN apt update && \
     DEBIAN_FRONTEND=noninteractive apt install --yes --no-install-recommends -- \
     dumb-init \
+    ca-certificates \
     python3-libvirt
 
 WORKDIR /
