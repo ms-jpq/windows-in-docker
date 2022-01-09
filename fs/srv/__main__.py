@@ -5,8 +5,10 @@ from time import sleep
 from typing import Callable, Iterator
 
 from .backup import backup
-from .consts import DRIVER_URI
 from .download import download
+
+# https://github.com/virtio-win/virtio-win-pkg-scripts
+_DRIVER_URI = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso"
 
 
 def _cycle(period: int, fn: Callable[[], None]) -> None:
@@ -28,7 +30,7 @@ def _parse_args() -> Namespace:
     parser.add_argument("destination")
     parser.add_argument("--daemon", type=int, default=0)
     parser.add_argument("--download", action="store_true")
-    parser.add_argument("--driver", default=DRIVER_URI)
+    parser.add_argument("--driver", default=_DRIVER_URI)
     return parser.parse_args()
 
 
@@ -45,7 +47,7 @@ def main() -> None:
         if args.download:
             yield lambda: _cycle(
                 args.deamon,
-                fn=lambda: download(root, src=args.driver),
+                fn=lambda: download(root / "downloads", src=args.driver),
             )
 
     _exec(*tasks())
