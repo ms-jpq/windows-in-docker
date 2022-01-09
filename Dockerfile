@@ -10,4 +10,4 @@ COPY ./fs /
 VOLUME [ "/var/run/libvirt/libvirt-sock-ro", "/data" ]
 
 ENTRYPOINT [ "/srv/main.py" ]
-CMD [ "/data", "--daemon", "60" ]
+CMD [ "/data", "--daemon", "60", "--download" ]

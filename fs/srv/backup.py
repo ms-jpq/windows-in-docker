@@ -1,19 +1,12 @@
-#!/usr/bin/env python3
-
-from argparse import ArgumentParser, Namespace
 from contextlib import closing, contextmanager
 from datetime import datetime
 from itertools import repeat
-from logging import INFO, StreamHandler, getLogger
 from pathlib import Path
-from time import sleep
 from typing import Any, Iterable, Iterator, Tuple
 
 from libvirt import openReadOnly
 
-log = getLogger()
-log.setLevel(INFO)
-log.addHandler(StreamHandler())
+from .log import log
 
 
 @contextmanager
@@ -40,7 +33,9 @@ def _ls_networks(conn: Any) -> Iterator[Tuple[str, str]]:
         yield network.name(), network.XMLDesc()
 
 
-def _backup(time: datetime, state: Iterable[Tuple[Path, Tuple[str, str]]]) -> None:
+def _backup(
+    time: datetime, state: Iterable[Tuple[Path, Tuple[str, str]]]
+) -> Iterator[str]:
     stub = time.isoformat().replace(":", ".") + ".xml"
 
     for kind, (name, xml) in state:
@@ -57,11 +52,13 @@ def _backup(time: datetime, state: Iterable[Tuple[Path, Tuple[str, str]]]) -> No
             most_recent, *_ = prev
             if xml != most_recent.read_text():
                 path.write_text(xml)
+                yield name
         else:
             path.write_text(xml)
+            yield name
 
 
-def _cycle(root: Path) -> None:
+def backup(root: Path) -> None:
     now = datetime.utcnow().replace(microsecond=0)
     with _conn() as conn:
         if not conn:
@@ -72,28 +69,6 @@ def _cycle(root: Path) -> None:
                 *zip(repeat(root / "storage"), _ls_storage(conn)),
                 *zip(repeat(root / "networks"), _ls_networks(conn)),
             )
-    _backup(now, state=state)
 
-    log.info("%s", now.strftime("%Y-%m-%d %H:%M:%S"))
-
-
-def _parse_args() -> Namespace:
-    parser = ArgumentParser()
-    parser.add_argument("destination")
-    parser.add_argument("--daemon", type=int, default=0)
-    return parser.parse_args()
-
-
-def main() -> None:
-    args = _parse_args()
-    root = Path(args.destination).resolve(strict=True)
-
-    while True:
-        _cycle(root)
-        if span := int(args.daemon):
-            sleep(span)
-        else:
-            break
-
-
-main()
+    for name in _backup(now, state=state):
+        log.info("%s", f"backed up -- {name}")
