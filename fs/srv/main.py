@@ -86,7 +86,7 @@ def _parse_args() -> Namespace:
 
 def main() -> None:
     args = _parse_args()
-    root = Path(args.destination).parent.resolve(strict=True)
+    root = Path(args.destination).resolve(strict=True)
 
     while True:
         _cycle(root)
