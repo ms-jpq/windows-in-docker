@@ -10,7 +10,7 @@ from urllib.parse import unquote, urlsplit
 from urllib.request import Request, build_opener
 
 from .log import log
-from .pathlib import chmod
+from .stat import RW_R__R__, RWXR_XR_X
 
 _MB = 10 ** 6
 _OPEN = build_opener()
@@ -40,7 +40,7 @@ def _fetch(uri: str) -> Iterator[bytes]:
 
 
 def download(root: Path, src: str) -> None:
-    chmod(root)
+    root.chmod(RWXR_XR_X)
 
     path = PurePosixPath(unquote(urlsplit(src).path))
     dest = root / path.name
@@ -58,6 +58,6 @@ def download(root: Path, src: str) -> None:
             fd.write(chunk)
 
     Path(fd.name).replace(dest)
-    chmod(dest)
+    dest.chmod(RW_R__R__)
     utime(dest, (mtime, mtime))
     log.info("%s", f"downloaded -- {src}")

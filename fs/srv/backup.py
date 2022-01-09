@@ -7,7 +7,7 @@ from typing import Any, Iterable, Iterator, Tuple
 from libvirt import openReadOnly
 
 from .log import log
-from .pathlib import chmod
+from .stat import RW_R__R__, RWXR_XR_X
 
 
 def _ls_domains(conn: Any) -> Iterator[Tuple[str, str]]:
@@ -34,9 +34,7 @@ def _backup(
         base = kind / name
         path = base / stub
 
-        base.mkdir(parents=True, exist_ok=True)
-        chmod(base)
-
+        base.mkdir(parents=True, exist_ok=True, mode=RWXR_XR_X)
         if prev := sorted(
             base.iterdir(),
             key=lambda p: datetime.fromisoformat(p.stem.replace(".", ":")),
@@ -45,11 +43,11 @@ def _backup(
             most_recent, *_ = prev
             if xml != most_recent.read_text():
                 path.write_text(xml)
-                chmod(path)
+                path.chmod(RW_R__R__)
                 yield name
         else:
             path.write_text(xml)
-            chmod(path)
+            path.chmod(RW_R__R__)
             yield name
 
 
@@ -62,5 +60,6 @@ def backup(root: Path) -> None:
             *zip(repeat(root / "networks"), _ls_networks(conn)),
         )
 
+    root.chmod(RWXR_XR_X)
     for name in _backup(now, state=state):
         log.info("%s", f"backed up -- {name}")

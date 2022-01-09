@@ -7,7 +7,6 @@ from typing import Callable, Iterator
 from .backup import backup
 from .download import download
 from .log import log
-from .pathlib import chmod
 
 _DRIVER_URI = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso"
 
@@ -42,7 +41,6 @@ def _parse_args() -> Namespace:
 def main() -> None:
     args = _parse_args()
     root = Path(args.destination).resolve(strict=True)
-    chmod(root)
 
     def tasks() -> Iterator[Callable[[], None]]:
         yield lambda: _cycle(
