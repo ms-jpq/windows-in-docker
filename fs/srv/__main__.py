@@ -35,6 +35,7 @@ def _parse_args() -> Namespace:
     parser.add_argument("destination")
 
     parser.add_argument("--backup-daemon", type=int, default=0)
+    parser.add_argument("--keep-n", type=int, default=99)
     parser.add_argument("--download-daemon", type=int, default=0)
 
     parser.add_argument("--download", action="store_true")
@@ -50,7 +51,7 @@ def main() -> None:
     def tasks() -> Iterator[Callable[[], None]]:
         yield lambda: _cycle(
             args.backup_daemon,
-            fn=lambda: backup(root),
+            fn=lambda: backup(root, keep_n=args.keep_n),
         )
 
         if args.download:

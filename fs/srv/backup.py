@@ -26,7 +26,7 @@ def _ls_networks(conn: Any) -> Iterator[Tuple[str, str]]:
 
 
 def _backup(
-    time: datetime, state: Iterable[Tuple[Path, Tuple[str, str]]]
+    time: datetime, keep_n: int, state: Iterable[Tuple[Path, Tuple[str, str]]]
 ) -> Iterator[str]:
     stub = time.isoformat().replace(":", ".") + ".xml"
 
@@ -41,7 +41,7 @@ def _backup(
             reverse=True,
         ):
             most_recent, *rest = prev
-            for path in islice(rest, 10, None):
+            for path in islice(rest, keep_n, None):
                 path.unlink()
 
             if xml != most_recent.read_text():
@@ -54,7 +54,7 @@ def _backup(
             yield name
 
 
-def backup(root: Path) -> None:
+def backup(root: Path, keep_n: int) -> None:
     now = datetime.utcnow().replace(microsecond=0)
 
     with closing(openReadOnly()) as conn:
@@ -65,5 +65,5 @@ def backup(root: Path) -> None:
         )
 
     root.chmod(RWXR_XR_X)
-    for name in _backup(now, state=state):
+    for name in _backup(now, keep_n=keep_n, state=state):
         log.info("%s", f"backed up -- {name}")
