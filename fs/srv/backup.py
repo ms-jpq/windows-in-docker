@@ -1,6 +1,6 @@
 from contextlib import closing
 from datetime import datetime
-from itertools import repeat
+from itertools import islice, repeat
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Tuple
 
@@ -40,7 +40,10 @@ def _backup(
             key=lambda p: datetime.fromisoformat(p.stem.replace(".", ":")),
             reverse=True,
         ):
-            most_recent, *_ = prev
+            most_recent, *rest = prev
+            for path in islice(rest, 10, None):
+                path.unlink()
+
             if xml != most_recent.read_text():
                 path.write_text(xml)
                 path.chmod(RW_R__R__)
