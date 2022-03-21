@@ -2,35 +2,35 @@
 
 ## Chores
 
-### Backup XML
-
-Periodically dump libvirt XML into `/data/backup`
-
-- `domain` (VMs)
-
-- `network`
-
-- `storage`
-
 ### Download Windows Drivers
 
-Periodically dump latest virtio-win.iso into `/data/downloads`
+Periodically dump latest virtio-win.iso into `/data`
 
 [From latest stable release](https://github.com/virtio-win/virtio-win-pkg-scripts)
+
+### Virt Manager
 
 ## Usage
 
 ```yaml
 ---
-version: "3.7"
+version: "3.9"
 
 services:
-  libvirt-chores:
+  libvirt:
     restart: always
     image: msjpq/libvirt-chores:latest
     environment:
       TZ:
+    ports:
+      - 80:80
     volumes:
+      - /var/run/libvirt/libvirt-admin-sock:/var/run/libvirt/libvirt-admin-sock:ro
       - /var/run/libvirt/libvirt-sock-ro:/var/run/libvirt/libvirt-sock-ro:ro
+      - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
+      - /var/run/libvirt/virtlockd-admin-sock:/var/run/libvirt/virtlockd-admin-sock:ro
+      - /var/run/libvirt/virtlockd-sock:/var/run/libvirt/virtlockd-sock:ro
+      - /var/run/libvirt/virtlogd-admin-sock:/var/run/libvirt/virtlogd-admin-sock:ro
+      - /var/run/libvirt/virtlogd-sock:/var/run/libvirt/virtlogd-sock:ro
       - ./data:/data
 ```

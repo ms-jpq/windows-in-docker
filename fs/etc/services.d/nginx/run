@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+from os import execl, sep
+from pathlib import Path, PurePath
+from subprocess import check_call
+
+root = PurePath(sep)
+check_call((root / "command" / "s6-svwait", "-U", Path.cwd().parent / "novnc"))
+
+arg0 = root / "usr" / "sbin" / "nginx"
+execl(arg0, arg0)

@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+from itertools import chain, repeat
+from os import execl, linesep, sep
+from pathlib import Path, PurePath
+from shutil import get_terminal_size
+from sys import argv, stderr
+
+cols, _ = get_terminal_size()
+hr = "*" * cols
+stderr.writelines(
+    (
+        hr,
+        linesep,
+        *chain.from_iterable(zip((Path.cwd().as_posix(), *argv), repeat(" "))),
+        linesep,
+        hr,
+        linesep,
+    )
+)
+stderr.flush()
+
+arg0 = PurePath(sep) / "run" / "s6" / "basedir" / "bin" / "halt"
+execl(arg0, arg0)

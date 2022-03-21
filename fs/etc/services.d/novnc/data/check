@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+
+from os import sep
+from pathlib import PurePath
+from subprocess import call
+from time import sleep
+
+while call(
+    (
+        PurePath(sep) / "usr" / "bin" / "curl",
+        "--silent",
+        "--max-time",
+        "1",
+        "--head",
+        "--",
+        "localhost:6800",
+    )
+):
+    sleep(1)

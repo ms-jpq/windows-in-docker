@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+
+from os import devnull, sep
+from pathlib import PurePath
+from subprocess import call
+from time import sleep
+
+with open(devnull) as fd:
+    while call((PurePath(sep) / "usr" / "bin" / "xset", "q"), stdout=fd, stderr=fd):
+        sleep(1)
