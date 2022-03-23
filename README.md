@@ -20,17 +20,13 @@ services:
   libvirt:
     restart: always
     image: msjpq/libvirt-chores:latest
+    security_opt:
+      - apparmor=unconfined
     environment:
       TZ:
     ports:
-      - 80:80
+      - 80:8080
     volumes:
-      - /var/run/libvirt/libvirt-admin-sock:/var/run/libvirt/libvirt-admin-sock:ro
-      - /var/run/libvirt/libvirt-sock-ro:/var/run/libvirt/libvirt-sock-ro:ro
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
-      - /var/run/libvirt/virtlockd-admin-sock:/var/run/libvirt/virtlockd-admin-sock:ro
-      - /var/run/libvirt/virtlockd-sock:/var/run/libvirt/virtlockd-sock:ro
-      - /var/run/libvirt/virtlogd-admin-sock:/var/run/libvirt/virtlogd-admin-sock:ro
-      - /var/run/libvirt/virtlogd-sock:/var/run/libvirt/virtlogd-sock:ro
       - ./data:/data
 ```

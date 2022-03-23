@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+from os import environ, execl, sep
+from pathlib import PurePath
+
+arg0 = PurePath(sep) / "command" / "s6-notifyoncheck"
+execl(
+    arg0,
+    arg0,
+    PurePath(sep) / "usr" / "bin" / "broadwayd",
+)

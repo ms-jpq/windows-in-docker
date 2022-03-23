@@ -4,9 +4,22 @@ from os import environ, sep
 from pathlib import Path, PurePath
 from subprocess import check_call, run
 
-root = PurePath(sep)
-check_call((root / "command" / "s6-svwait", Path.cwd().parent / "vncconfig"))
+check_call(
+    (
+        PurePath(sep) / "command" / "s6-svwait",
+        "-U",
+        Path.cwd().parent / "broadwayd",
+    )
+)
 
-arg0 = root / "usr" / "bin" / "virt-manager"
 while True:
-    run((arg0, "--no-fork", "--connect", environ["VIRT_CONN"]))
+    run(
+        (
+            PurePath(sep) / "usr" / "bin" / "dbus-launch",
+            "--",
+            PurePath(sep) / "usr" / "bin" / "virt-manager",
+            "--no-fork",
+            "--connect",
+            environ["VIRT_CONN"],
+        )
+    )

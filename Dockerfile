@@ -8,13 +8,11 @@ ENV TERM=xterm-256color
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends -- \
-    curl \
     xz-utils \
-    x11-xserver-utils \
-    tigervnc-standalone-server \
-    tigervnc-xorg-extension \
-    novnc \
-    nginx \
+    libgtk-3-bin \
+    dbus-x11 \
+    curl \
+    socat \
     virt-manager \
     gir1.2-spiceclientgtk-3.0
 
@@ -32,14 +30,9 @@ ENTRYPOINT [ "/init" ]
 
 
 COPY ./fs /
-ENV DISPLAY=:0 \
-    SCR_WIDTH=1600 \
-    SCR_HEIGHT=900 \
-    PATH_PREFIX=/ \
-    VNC_RESIZE=remote \
-    PAGE_TITLE=VirtMan \
+ENV GDK_BACKEND=broadway \
     VIRT_CONN=qemu:///system \
     DATA_DIR=/data \
     WIN_DRIVER='https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso'
-EXPOSE 80 5900
+EXPOSE 8080
 VOLUME [ "/data" ]
