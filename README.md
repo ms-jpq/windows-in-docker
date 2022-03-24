@@ -1,4 +1,8 @@
-# [Libvirt Chores](https://ms-jpq.github.io/libvirt-chores)
+# [Run Windows in Docker](https://ms-jpq.github.io/run-windows-in-docker)
+
+You really can run any VM / container you want under this. But I made it specifically to make headless windows less of a PITA.
+
+## What It Does
 
 ### Download VirtIO Windows Drivers
 
@@ -39,4 +43,4 @@ services:
 
 3. Drag in some ISOs you want to install under `${DATA_DIR}`
 
-4. Go to port 80, you are good to go.
+4. Go to port 80, follow the GUI, you are good to go.
