@@ -16,7 +16,7 @@ Periodically dump latest `virtio-win.iso` into `/data`
 
 ## Usage
 
-1. Install `libvirt-daemon` under linux, ie `apt install -- libvirt-daemon`.
+1. Install `libvirt-daemon` under **linux host**, ie `apt install -- libvirt-daemon`.
 
 2. Run the following `docker-compose`.
 
