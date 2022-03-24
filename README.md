@@ -1,4 +1,4 @@
-# [Windows in Docker](https://ms-jpq.github.io/run-windows-in-docker)
+# [Windows in Docker](https://ms-jpq.github.io/windows-in-docker)
 
 You really can run any VM / container you want under this. But I made it specifically to make headless windows less of a PITA.
 
@@ -29,7 +29,7 @@ version: "3.9"
 services:
   libvirt:
     restart: always
-    image: msjpq/run-windows-in-docker:latest
+    image: msjpq/windows-in-docker:latest
     security_opt:
       - apparmor=unconfined
     environment:
