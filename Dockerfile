@@ -10,7 +10,7 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends -- \
     xz-utils \
     libgtk-3-bin \
-    dbus-x11 \
+    dbus \
     curl \
     socat \
     virt-manager \

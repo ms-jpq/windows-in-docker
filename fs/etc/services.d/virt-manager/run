@@ -15,7 +15,7 @@ check_call(
 while True:
     run(
         (
-            PurePath(sep) / "usr" / "bin" / "dbus-launch",
+            PurePath(sep) / "usr" / "bin" / "dbus-run-session",
             "--",
             PurePath(sep) / "usr" / "bin" / "virt-manager",
             "--no-fork",
