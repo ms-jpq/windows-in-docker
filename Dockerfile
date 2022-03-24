@@ -12,7 +12,6 @@ RUN apt-get update && \
     libgtk-3-bin \
     dbus \
     curl \
-    socat \
     virt-manager \
     gir1.2-spiceclientgtk-3.0
 
@@ -31,6 +30,7 @@ ENTRYPOINT [ "/init" ]
 
 COPY ./fs /
 ENV GDK_BACKEND=broadway \
+    NO_AT_BRIDGE=1 \
     VIRT_CONN=qemu:///system \
     DATA_DIR=/data \
     WIN_DRIVER='https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso'
