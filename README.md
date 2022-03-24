@@ -1,16 +1,20 @@
 # [Libvirt Chores](https://ms-jpq.github.io/libvirt-chores)
 
-## Chores
+### Download VirtIO Windows Drivers
 
-### Download Windows Drivers
-
-Periodically dump latest virtio-win.iso into `/data`
+Periodically dump latest `virtio-win.iso` into `/data`
 
 [From latest stable release](https://github.com/virtio-win/virtio-win-pkg-scripts)
 
-### Virt Manager
+### Web GUI 4 Virt Manager
+
+![virt man](https://raw.githubusercontent.com/ms-jpq/libvirt-chores/main/screenshots/virtman.png)
 
 ## Usage
+
+1. Install `libvirt-daemon` under linux, ie `apt install -- libvirt-daemon`.
+
+2. Run the following `docker-compose`.
 
 ```yaml
 ---
@@ -24,9 +28,15 @@ services:
       - apparmor=unconfined
     environment:
       TZ:
+      # Make sure DATA_DIR is the same across the three `${DATA_DIR}`s
+      DATA_DIR: "${DATA_DIR}"
     ports:
       - 80:8080
     volumes:
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
-      - ./data:/data
+      - "${DATA_DIR}:${DATA_DIR}"
 ```
+
+3. Drag in some ISOs you want to install under `${DATA_DIR}`
+
+4. Go to port 80, you are good to go.
