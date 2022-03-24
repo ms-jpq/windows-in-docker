@@ -1,5 +1,7 @@
 # [Windows in Docker](https://ms-jpq.github.io/windows-in-docker)
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/msjpq/windows-in-docker.svg)](https://hub.docker.com/r/msjpq/windows-in-docker/)
+
 You really can run any VM / container you want under this. But I made it specifically to make headless windows less of a PITA.
 
 Technically this is more of a "manage Windows in Docker" type of project, you can shutdown `dockerd` and all of your VMs won't be effected.
