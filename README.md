@@ -1,4 +1,4 @@
-# [Run Windows in Docker](https://ms-jpq.github.io/run-windows-in-docker)
+# [Windows in Docker](https://ms-jpq.github.io/run-windows-in-docker)
 
 You really can run any VM / container you want under this. But I made it specifically to make headless windows less of a PITA.
 
