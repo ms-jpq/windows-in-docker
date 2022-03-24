@@ -27,12 +27,13 @@ version: "3.9"
 services:
   libvirt:
     restart: always
-    image: msjpq/libvirt-chores:latest
+    image: msjpq/run-windows-in-docker:latest
     security_opt:
       - apparmor=unconfined
     environment:
       TZ:
       # Make sure DATA_DIR is the same across the three `${DATA_DIR}`s
+      # The windows drivers are also downloaded under here.
       DATA_DIR: "${DATA_DIR}"
     ports:
       - 80:8080
@@ -41,6 +42,14 @@ services:
       - "${DATA_DIR}:${DATA_DIR}"
 ```
 
-3. Drag in some ISOs you want to install under `${DATA_DIR}`
+3. Drag in some ISOs you want to install under `${DATA_DIR}`.
 
 4. Go to port 80, follow the GUI, you are good to go.
+
+## Wait A Minute
+
+Libvirt doesn't run under Docker tho?
+
+Well, I realized running `libvirt` under Docker was actually a stupid idea.
+
+You can't say provision a ZFS storage pool for example.
