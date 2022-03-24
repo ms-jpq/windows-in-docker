@@ -14,7 +14,7 @@ Periodically dump latest `virtio-win.iso` into `/data`
 
 ### Web GUI 4 Virt Manager
 
-![virt man](https://raw.githubusercontent.com/ms-jpq/libvirt-chores/main/screenshots/virtman.png)
+![virt man](https://raw.githubusercontent.com/ms-jpq/windows-in-docker/main/screenshots/virtman.png)
 
 ## Usage
 
