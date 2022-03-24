@@ -2,6 +2,8 @@
 
 You really can run any VM / container you want under this. But I made it specifically to make headless windows less of a PITA.
 
+Technically this is more of a "manage Windows in Docker" type of project, you can shutdown `dockerd` and all of your VMs won't be effected.
+
 ## What It Does
 
 ### Download VirtIO Windows Drivers
