@@ -3,7 +3,6 @@ FROM fedora:36
 
 ARG S6_OVERLAY_VERSION=3.0.0.2-2
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
-ENV TERM=xterm-256color
 
 
 RUN dnf --setopt=install_weak_deps=False install -y -- \
@@ -11,15 +10,16 @@ RUN dnf --setopt=install_weak_deps=False install -y -- \
     curl \
     dbus-daemon \
     virt-manager && \
-    dnf clean all
-
-
-ADD https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-noarch-"$S6_OVERLAY_VERSION".tar.xz /tmp
-ADD https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-x86_64-"$S6_OVERLAY_VERSION".tar.xz /tmp
-RUN tar -C / -Jxpf /tmp/s6-overlay-noarch-"$S6_OVERLAY_VERSION".tar.xz && \
-    tar -C / -Jxpf /tmp/s6-overlay-x86_64-"$S6_OVERLAY_VERSION".tar.xz && \
+    dnf clean all && \
+    curl --location --output /tmp/s6-overlay-noarch.tar.xz -- \
+         https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-noarch-"$S6_OVERLAY_VERSION".tar.xz && \
+    curl --location --output /tmp/s6-overlay-x86_64.tar.xz -- \
+         https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-x86_64-"$S6_OVERLAY_VERSION".tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz && \
     rm -rf -- /tmp/**
-ENV S6_KEEP_ENV=1 \
+ENV TERM=xterm-256color\
+    S6_KEEP_ENV=1 \
     S6_BEHAVIOUR_IF_STAGE2_FAILS=2 \
     S6_SERVICES_GRACETIME=0 \
     S6_KILL_GRACETIME=0
