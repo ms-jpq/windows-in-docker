@@ -4,5 +4,8 @@ version: "3.9"
 services:
   libvirt:
     build: .
+    environment:
+      TZ:
+      DEV: 1
     ports:
-      - 5900:5900
+      - 8080:8080

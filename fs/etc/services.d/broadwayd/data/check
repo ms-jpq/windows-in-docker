@@ -7,7 +7,7 @@ from time import sleep
 
 while call(
     (
-        PurePath(sep) / "usr" / "bin" / "curl",
+        PurePath(sep) / "bin" / "curl",
         "--silent",
         "--max-time",
         "1",

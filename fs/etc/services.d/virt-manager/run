@@ -15,9 +15,9 @@ check_call(
 while True:
     run(
         (
-            PurePath(sep) / "usr" / "bin" / "dbus-run-session",
+            PurePath(sep) / "bin" / "dbus-run-session",
             "--",
-            PurePath(sep) / "usr" / "bin" / "virt-manager",
+            PurePath(sep) / "bin" / "virt-manager",
             "--no-fork",
             "--connect",
             environ["VIRT_CONN"],

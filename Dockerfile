@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM fedora:36
 
 
 ARG S6_OVERLAY_VERSION=3.0.0.2-2
@@ -6,14 +6,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV TERM=xterm-256color
 
 
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install --yes --no-install-recommends -- \
-    xz-utils \
-    libgtk-3-bin \
-    dbus \
+RUN dnf --setopt=install_weak_deps=False install -y -- \
+    xz \
     curl \
-    virt-manager \
-    gir1.2-spiceclientgtk-3.0
+    dbus-daemon \
+    virt-manager && \
+    dnf clean all
 
 
 ADD https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-noarch-"$S6_OVERLAY_VERSION".tar.xz /tmp
