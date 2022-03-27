@@ -68,7 +68,7 @@ def _download(root: Path, src: str) -> None:
 
 while True:
     try:
-        if src := environ["WIN_DRIVER"]:
+        if src := environ.get("WIN_DRIVER"):
             _download(Path(sep) / environ["DATA_DIR"], src=src)
     except Exception as e:
         stderr.write(repr(e))
