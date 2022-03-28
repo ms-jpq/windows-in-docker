@@ -72,6 +72,5 @@ while True:
             _download(Path(sep) / environ["DATA_DIR"], src=src)
     except Exception as e:
         stderr.write(repr(e))
-
-    print(f"SLEEPING -- {_SLEEP}")
-    sleep(_SLEEP.seconds)
+    finally:
+        sleep(_SLEEP.total_seconds())
