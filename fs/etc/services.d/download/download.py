@@ -73,4 +73,5 @@ while True:
     except Exception as e:
         stderr.write(repr(e))
 
+    print(f"SLEEPING -- {_SLEEP}")
     sleep(_SLEEP.seconds)
