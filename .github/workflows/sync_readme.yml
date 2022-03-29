@@ -21,6 +21,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ secrets.DOCKER_USERNAME }}/${{ github.event.repository.name }}
+          repository: ${{ secrets.DOCKER_USERNAME }}/windows-in-docker
           readme: "./README.md"
-
