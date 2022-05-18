@@ -13,10 +13,10 @@ RUN dnf --setopt=install_weak_deps=False install -y -- \
     dnf clean all && \
     curl --location --output /tmp/s6-overlay-noarch.tar.xz -- \
          https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-noarch-"$S6_OVERLAY_VERSION".tar.xz && \
-    curl --location --output /tmp/s6-overlay-x86_64.tar.xz -- \
-         https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-x86_64-"$S6_OVERLAY_VERSION".tar.xz && \
+    curl --location --output /tmp/s6-overlay-some-arch.tar.xz -- \
+         https://github.com/just-containers/s6-overlay/releases/download/v"$S6_OVERLAY_VERSION"/s6-overlay-"$(arch)"-"$S6_OVERLAY_VERSION".tar.xz && \
     tar -C / -Jxpf /tmp/s6-overlay-noarch.tar.xz && \
-    tar -C / -Jxpf /tmp/s6-overlay-x86_64.tar.xz && \
+    tar -C / -Jxpf /tmp/s6-overlay-some-arch.tar.xz && \
     rm -rf -- /tmp/**
 ENV TERM=xterm-256color\
     S6_KEEP_ENV=1 \

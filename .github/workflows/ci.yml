@@ -23,12 +23,22 @@ jobs:
       - name: Lint
         run: mypy -- .
 
-      - name: Build
-        uses: docker/build-push-action@v1
+      - name: QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ secrets.DOCKER_USERNAME }}/windows-in-docker
-          tags: latest
-          path: .
-          Dockerfile: Dockerfile
+
+      - name: Build
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/windows-in-docker:latest
+          context: .
+          platforms: linux/amd64,linux/arm64
