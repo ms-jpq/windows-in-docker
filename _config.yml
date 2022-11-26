@@ -1,6 +1,7 @@
 ---
-title: Libvirt Chores
+title: Windows in Docker
 
 showcase: True
 
-images: []
+images:
+  - https://raw.githubusercontent.com/ms-jpq/windows-in-docker/main/screenshots/virtman.png
