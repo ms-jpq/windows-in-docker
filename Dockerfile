@@ -1,4 +1,4 @@
-FROM fedora:36
+FROM fedora:latest
 
 
 ARG S6_OVERLAY_VERSION=3.0.0.2-2
