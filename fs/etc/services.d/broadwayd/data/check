@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from os import sep
+from os import environ
 from pathlib import PurePath
 from subprocess import call
 from time import sleep
@@ -13,7 +14,7 @@ while call(
         "1",
         "--head",
         "--",
-        "localhost:8080",
+        "localhost:" + environ.get('BROADWAY_PORT'),
     )
 ):
     sleep(1)

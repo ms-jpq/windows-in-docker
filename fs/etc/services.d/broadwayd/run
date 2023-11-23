@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
+#!/bin/bash
 
-from os import execl, sep
-from pathlib import PurePath
-
-arg0 = PurePath(sep) / "command" / "s6-notifyoncheck"
-execl(
-    arg0,
-    arg0,
-    PurePath(sep) / "bin" / "broadwayd",
-)
+/command/s6-notifyoncheck /bin/broadwayd --port $BROADWAY_PORT
