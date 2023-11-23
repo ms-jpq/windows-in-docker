@@ -1,4 +1,9 @@
 # [Windows in Docker](https://ms-jpq.github.io/windows-in-docker)
+## BRANCH CHANGES ##
+
+Use port environment variable BROADWAY_PORT to define what port is used internally in case you want to use host as network or whatever.
+
+##
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/msjpq/windows-in-docker.svg)](https://hub.docker.com/r/msjpq/windows-in-docker/)
 
