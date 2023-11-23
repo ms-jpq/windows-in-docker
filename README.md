@@ -1,4 +1,9 @@
 # [Windows in Docker](https://ms-jpq.github.io/windows-in-docker)
+## BRANCH CHANGES ##
+
+Use port environment variable BROADWAY_PORT to define what port is used internally in case you want to use host as network or whatever.
+
+##
 
 [![Docker Pulls](https://img.shields.io/docker/pulls/msjpq/windows-in-docker.svg)](https://hub.docker.com/r/msjpq/windows-in-docker/)
 
@@ -22,7 +27,9 @@ Periodically dump latest `virtio-win.iso` into `/data`
 
 1. Install `libvirt-daemon` under **linux host**, ie `apt install -- libvirt-daemon-system`.
 
-2. Run the following `docker-compose`.
+2. Adjust the broadway_port variable to define your own port. Default is 8080
+
+3. Run the following `docker-compose`.
 
 ```yaml
 ---
@@ -39,8 +46,10 @@ services:
       # Make sure DATA_DIR is the same across the three `${DATA_DIR}`s
       # The windows drivers are also downloaded under here.
       DATA_DIR: "${DATA_DIR}"
+      BROADWAY_PORT: "${BROADWAY_PORT}"
+  
     ports:
-      - 80:8080
+      - 80:${BROADWAY_PORT}
     volumes:
       - /var/run/libvirt/libvirt-sock:/var/run/libvirt/libvirt-sock:ro
       - "${DATA_DIR}:${DATA_DIR}"
