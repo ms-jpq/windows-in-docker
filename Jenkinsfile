@@ -1,19 +1,22 @@
 node {
     def app
+    def dockerImageName
 
     stage('Clone repository') { // for display purposes
         cleanWs()
-        //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/dddmaster/docker_samba_ad.git'
-        checkout scm
+        def s = checkout scm
+        def splitGitUrl = s.GIT_URL.split('/');
+        dockerImageName = splitGitUrl[splitGitUrl.size() - 2] + "/" + splitGitUrl[splitGitUrl.size() - 1].replace(".git", "")
     }
     stage('Build') {
-        app = docker.build "dddmaster/windows-in-docker"
+        app = docker.build dockerImageName
     }
 
     stage('push') {
-        // This step should not normally be used in your script. Consult the inline help for details.
         withDockerRegistry(credentialsId: 'dockerhub') {
             app.push('latest')
         }
+
+        cleanWs()
     }
 }
